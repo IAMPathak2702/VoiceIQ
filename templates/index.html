@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice Recorder</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="../static/styles.css">
+</head>
+
+<body class="full-screen">
+    <div class="container-fluid h-100">
+        <div class="row justify-content-center align-items-center h-100">
+            <div class="col-md-8">
+                <div class="card bg-oled-black text-white">
+                    <div class="card-body">
+                        <h1 class="text-center mb-4">
+                            <span class="dynamic-text">Voice Recorder</span>
+                            <span class="dynamic-dot">.</span>
+                        </h1>
+                        <div class="text-center mb-4">
+                            <button id="recordBtn" class="btn btn-primary btn-circle">
+                                <i class="fas fa-microphone fa-lg"></i>
+                            </button>
+                        </div>
+                        <div class="form-group">
+                            <textarea id="transcription" class="form-control text-white bg-dark" rows="8"
+                                disabled></textarea>
+                        </div>
+                        <audio id="audioPlayer" style="display: none;"></audio>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../static/index.js"></script>
+</body>
+
+</html>
