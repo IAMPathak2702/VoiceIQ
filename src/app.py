@@ -9,8 +9,7 @@ import time
 from audio_recorder_streamlit import audio_recorder
 import base64
 
-# Initialize the OpenAI client
-client = OpenAI()
+
 
 # Function to set up the OpenAI client
 def setup_openai_client(apikey):
@@ -72,7 +71,7 @@ def fetch_ai_response(client, input_text):
     return gpt_response_content
 
 # Function to convert text to speech
-def text_to_speech(text_input, audio_path, client=client):
+def text_to_speech(text_input, audio_path, client):
     """
     Convert text to speech using the OpenAI TTS model.
 
@@ -126,10 +125,12 @@ def main():
 
     # Get the OpenAI API key from the user
     api_key = st.sidebar.text_input(label="Enter your OpenAI Key", type="password")
+    
+    note=st.sidebar.info("After Inserting OPENAI API KEY , Close this sidebar")
 
     if api_key:
-        client = OpenAI()
-        # client = setup_openai_client(apikey=api_key)
+
+        client = setup_openai_client(apikey=api_key)
 
         l1, l2, l3, l4, l5 = st.columns(5)
         with l3:
