@@ -1,4 +1,3 @@
-````markdown
 # VoiceIQ: Artificial Intelligence Interviewer
 
 VoiceIQ is a Streamlit application that simulates an AI interviewer for a Generative AI developer position. It leverages the OpenAI API to transcribe audio recordings, generate AI responses, and convert text to speech.
@@ -21,6 +20,7 @@ To run the VoiceIQ application, follow these steps:
 ```bash
 git clone https://github.com/IAMPathak2702/VoiceIQ.git
 ```
+
 ````
 
 2. Install the required dependencies:
@@ -74,6 +74,4 @@ Contributions are welcome! If you find any issues or have suggestions for improv
 
 This project is licensed under the [MIT License](LICENSE).
 
-```
-
-```
+````
