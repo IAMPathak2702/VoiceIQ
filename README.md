@@ -21,7 +21,7 @@ To run the VoiceIQ application, follow these steps:
 git clone https://github.com/IAMPathak2702/VoiceIQ.git
 ```
 
-````
+
 
 2. Install the required dependencies:
 
