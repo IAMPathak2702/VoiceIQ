@@ -25,7 +25,6 @@ def setup_openai_client(apikey):
     return OpenAI(api_key=apikey)
 
 # Function to transcribe audio to text
-import io
 
 def transcribe_audio(file_path, client):
     """
@@ -43,8 +42,12 @@ def transcribe_audio(file_path, client):
     print(transcript)
     return transcript
 
+
+
+
+
 # Function to fetch AI response for a given input text
-def fetch_ai_response(client, input_text):
+def fetch_ai_response(client, user_message):
     """
     Fetch an AI response from the OpenAI GPT-3.5-turbo model.
 
@@ -55,20 +58,27 @@ def fetch_ai_response(client, input_text):
     Returns:
         str: The AI-generated response.
     """
+
     messages = [
         {
             "role": "system",
-            "content": "You are interviewing the user for a Generative AI developer position. Ask one short question that are relevant to a junior level developer. provide feedback if necessary to user previous response first then ask a new question. Keep responses under 30 words and be funny sometimes."
+            "content": """You are conducting a job interview for a Junior Generative AI Developer role.
+            Start with an easy question relevant to a junior level, check if the response
+            is satisfactory, and provide feedback. Gradually increase the difficulty with
+            each subsequent question. Keep your responses concise (under 30 words) and occasionally 
+            inject some humor.""",
         },
+        
         {
             "role": "user",
-            "content": input_text
+            "content": user_message
         }
     ]
     gpt_response = client.chat.completions.create(model="gpt-3.5-turbo", messages=messages)
     gpt_response_content = gpt_response.choices[0].message.content
     messages.append({"role": "assistant", "content": gpt_response_content})
     return gpt_response_content
+
 
 # Function to convert text to speech
 def text_to_speech(text_input, audio_path, client):
@@ -114,28 +124,37 @@ def main():
     """
     The main function that sets up the Streamlit app and handles the AI interviewer functionality.
     """
+     # Set up the Streamlit app
     st.set_page_config(page_title="Interview Chatbot", layout="wide")
-
-    # Set up the Streamlit app
     st.markdown("""
     <h1 style="text-align: center;"> 🧠 Artificial Intelligence Interviewer 🤖</h1>
     <h4 style="text-align: center;color:red;">This chatbot will take your interview for a Generative AI developer position.</h4>
-    <h6 style="text-align: center;color:green;">Click on Mic button and speak "MY NAME IS {YOUR NAME} to test Your Microphone and start interview</h6>
+    <h6 style="text-align: center;color:green;">Click on Mic button and speak <strong style="color:yellow;"> "Greet AI with Hello" </strong> to test Your Microphone and start the interview</h6>
     """, unsafe_allow_html=True)
 
     # Get the OpenAI API key from the user
     api_key = st.sidebar.text_input(label="Enter your OpenAI Key", type="password")
     
-    note=st.sidebar.info("After Inserting OPENAI API KEY , Close this sidebar")
+    st.sidebar.info("After Inserting OPENAI API KEY , Close this sidebar",icon="⏮️")
+    st.sidebar.markdown(""" ## ⚠️ Model Access Requirements
+
+The following model access is required:
+
+- **gpt-3.5-turbo**
+- **whisper-1**
+- **tts-1**
+""")
+    
+    st.sidebar.info("Ved Prakash Pathak",icon="😄")
 
     if api_key:
 
         client = setup_openai_client(apikey=api_key)
 
-        l1, l2, l3, l4, l5 = st.columns(5)
-        with l3:
+        l1, l2, l3, l4, l5,l6,l7 = st.columns(7)
+        with l4:
             # Record audio from the user
-            recorded_audio = audio_recorder(icon_size="7x")
+            recorded_audio = audio_recorder(text="            ",icon_size="7x")
 
         if recorded_audio:
             # Save the recorded audio to a file
@@ -147,7 +166,7 @@ def main():
             transcribe_text = transcribe_audio(client=client, file_path="audio.MP3")
 
             # Fetch the AI response based on the transcribed text
-            ai_response = fetch_ai_response(input_text=transcribe_text, client=client)
+            ai_response = fetch_ai_response(user_message=transcribe_text, client=client)
             response_audio_file = "ai_audio.MP3"
             
             
